@@ -3,7 +3,17 @@ import sys
 import pygame
 import os
 
-cities_coords = []
+x, y = map(float, input("Введите координаты через пробел: ").split())
+while not (-90 < y < 90 and -180 < y < 180):
+    print("Неверные данные ")
+    x, y = map(float, input("Введите координаты через пробел: ").split())
+coords = f"{y} {x}"
+
+scale = list(map(int, input("Введите параметры масштаба через пробел: ").split()))
+while not (0 < scale[0] < 50 and 0 < scale[1] < 50):
+    print("Неверные данные ")
+    scale = list(map(int, input("Введите параметры масштаба через пробел: ").split()))
+scale = f"{scale[0]} {scale[1]}"
 map_file = "map.png"
 map_file1 = "map1.png"
 map_file2 = "map2.png"
@@ -45,9 +55,9 @@ def get_gb(toponym_coordinates, zoom, map_file):
         file.write(response.content)
 
 
-get_map("-69.132 -23.861", "15 15", map_file)
-get_sat("-69.132 -23.861", "15 15", map_file1)
-get_gb("-69.132 -23.861", "15 15", map_file2)
+get_map(coords, scale, map_file)
+get_sat(coords, scale, map_file1)
+get_gb(coords, scale, map_file2)
 pygame.init()
 screen = pygame.display.set_mode((600, 450))
 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]

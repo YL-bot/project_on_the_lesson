@@ -4,13 +4,13 @@ import pygame
 import os
 
 x, y = map(float, input("Введите координаты через пробел: ").split())
-while not (-90 < y < 90 and -180 < y < 180):
+while not (-90 < x < 90 and -180 < y < 180):
     print("Неверные данные ")
     x, y = map(float, input("Введите координаты через пробел: ").split())
 coords = f"{y} {x}"
 print()
 scale = list(map(float, input("Введите параметры масштаба через пробел: ").split()))
-while not (0 < scale[0] < 50 and 0 < scale[1] < 50):
+while not (0 < scale[0] < 70 and 0 < scale[1] < 70):
     print("Неверные данные ")
     scale = list(map(float, input("Введите параметры масштаба через пробел: ").split()))
 scale = f"{scale[0]} {scale[1]}"
@@ -92,6 +92,7 @@ screen = pygame.display.set_mode((width, height))
 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 running = True
 i = 0
+zoom = scale
 count = 0
 active = False
 
@@ -111,6 +112,42 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
             i += 1
             i = (i + 1) % 3 - 1
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEDOWN:
+            zoom = zoom.split()
+            if float(zoom[0]) >= 1 and float(zoom[0]) <= 70 and float(zoom[1]) >= 1 and float(zoom[1]) <= 70:
+                zoom = f'{float(zoom[0]) + 1} {float(zoom[1]) + 1}'
+            else:
+                zoom = f'{float(zoom[0])} {float(zoom[1])}'
+
+            if i == 0:
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+            elif i == 1:
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+            elif i == -1:
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEUP:
+            zoom = zoom.split()
+            if float(zoom[0]) > 0 and float(zoom[1]) > 0:
+                zoom = f'{float(zoom[0]) - 1} {float(zoom[1]) - 1}'
+            else:
+                zoom = f'{float(zoom[0])} {float(zoom[1])}'
+
+            if i == 0:
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+            elif i == 1:
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+            elif i == -1:
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+        slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
         if event.type == pygame.KEYDOWN:
             if active:
                 if event.key == pygame.K_RETURN:

@@ -191,15 +191,28 @@ while running:
                 zoom = f'{float(zoom[0]) + 1} {float(zoom[1]) + 1}'
             else:
                 zoom = f'{float(zoom[0])} {float(zoom[1])}'
+
             if i == 0:
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
+
+                if full_adress == '':
+                    get_map(coords, zoom, map_file)
+                else:
+                    get_map(coords, zoom, map_file, get_coords_for_city(str(text)))
+
             elif i == 1:
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
+                if full_adress == '':
+                    get_sat(coords, zoom, map_file1)
+                else:
+                    get_sat(coords, zoom, map_file1, get_coords_for_city(str(text)))
             elif i == -1:
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+                if full_adress == '':
+                    get_gb(coords, zoom, map_file2)
+                else:
+                    get_gb(coords, zoom, map_file2, get_coords_for_city(str(text)))
+
             slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
@@ -212,12 +225,12 @@ while running:
                 if full_adress != '':
                     a = get_coords_for_city(str(text))
                     get_map(coords, zoom, map_file, a)
-                    get_map(coords, zoom, map_file1, a)
-                    get_map(coords, zoom, map_file2, a)
+                    get_sat(coords, zoom, map_file1, a)
+                    get_gb(coords, zoom, map_file2, a)
                 else:
                     get_map(coords, zoom, map_file)
-                    get_map(coords, zoom, map_file1)
-                    get_map(coords, zoom, map_file2)
+                    get_sat(coords, zoom, map_file1)
+                    get_gb(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -231,12 +244,12 @@ while running:
                 if full_adress != '':
                     a = get_coords_for_city(str(text))
                     get_map(coords, zoom, map_file, a)
-                    get_map(coords, zoom, map_file1, a)
-                    get_map(coords, zoom, map_file2, a)
+                    get_sat(coords, zoom, map_file1, a)
+                    get_gb(coords, zoom, map_file2, a)
                 else:
                     get_map(coords, zoom, map_file)
-                    get_map(coords, zoom, map_file1)
-                    get_map(coords, zoom, map_file2)
+                    get_sat(coords, zoom, map_file1)
+                    get_gb(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -250,12 +263,12 @@ while running:
                 if full_adress != '':
                     a = get_coords_for_city(str(text))
                     get_map(coords, zoom, map_file, a)
-                    get_map(coords, zoom, map_file1, a)
-                    get_map(coords, zoom, map_file2, a)
+                    get_sat(coords, zoom, map_file1, a)
+                    get_gb(coords, zoom, map_file2, a)
                 else:
                     get_map(coords, zoom, map_file)
-                    get_map(coords, zoom, map_file1)
-                    get_map(coords, zoom, map_file2)
+                    get_sat(coords, zoom, map_file1)
+                    get_gb(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -269,12 +282,12 @@ while running:
                 if full_adress != '':
                     a = get_coords_for_city(str(text))
                     get_map(coords, zoom, map_file, a)
-                    get_map(coords, zoom, map_file1, a)
-                    get_map(coords, zoom, map_file2, a)
+                    get_sat(coords, zoom, map_file1, a)
+                    get_gb(coords, zoom, map_file2, a)
                 else:
                     get_map(coords, zoom, map_file)
-                    get_map(coords, zoom, map_file1)
-                    get_map(coords, zoom, map_file2)
+                    get_sat(coords, zoom, map_file1)
+                    get_gb(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -284,20 +297,28 @@ while running:
                 zoom = f'{float(zoom[0]) - 1} {float(zoom[1]) - 1}'
             else:
                 zoom = f'{float(zoom[0])} {float(zoom[1])}'
+
             if i == 0:
                 os.remove(map_file)
 
-                if full_adress != '':
+                if full_adress == '':
                    get_map(coords, zoom, map_file)
                 else:
-                    get_map(coords, zoom, map_file, coords)
+                    get_map(coords, zoom, map_file, get_coords_for_city(str(text)))
 
             elif i == 1:
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
+                if full_adress == '':
+                    get_sat(coords, zoom, map_file1)
+                else:
+                    get_sat(coords, zoom, map_file1, get_coords_for_city(str(text)))
             elif i == -1:
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+                if full_adress == '':
+                   get_gb(coords, zoom, map_file2)
+                else:
+                    get_gb(coords, zoom, map_file2, get_coords_for_city(str(text)))
+
             slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
         if event.type == pygame.KEYDOWN:

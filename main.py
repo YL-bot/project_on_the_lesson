@@ -274,9 +274,9 @@ while running:
                     q = coords
                     coords = get_coords_for_city(str(text))
                     adress_prev = full_adress
-                    get_map(coords, "0.5 0.5", map_file, coords)
-                    get_sat(coords, "0.5 0.5", map_file1, coords)
-                    get_gb(coords, "0.5 0.5", map_file2, coords)
+                    get_map(coords, zoom, map_file, coords)
+                    get_sat(coords, zoom, map_file1, coords)
+                    get_gb(coords, zoom, map_file2, coords)
                     get_full_adress(coords)
                     get_index()
                     prev_adress = full_adress

@@ -150,7 +150,7 @@ full_adress = ""
 prev_adress = ""
 q = coords
 show_index = False
-innput_box =  pygame.Rect(0, 0, 35, height // 3)
+innput_box = pygame.Rect(0, 0, 285, 30)
 
 while running:
     for event in pygame.event.get():
@@ -168,12 +168,13 @@ while running:
                 text = txt
                 coords = q
                 full_adress = prev_adress
-                get_map(coords, "0.5 0.5", map_file, coords)
-                get_sat(coords, "0.5 0.5", map_file1, coords)
-                get_gb(coords, "0.5 0.5", map_file2, coords)
+                get_map(coords, zoom, map_file)
+                get_sat(coords, zoom, map_file1)
+                get_gb(coords, zoom, map_file2)
                 get_full_adress(coords)
                 get_index()
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
             if btn_index.collidepoint(event.pos):
                 show_index = not show_index
             else:
@@ -248,7 +249,6 @@ while running:
                 get_gb(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
-
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEUP:
             zoom = zoom.split()

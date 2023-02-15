@@ -206,11 +206,18 @@ while running:
             if -90 < float((coords.split(' ')[1])) - 1 < 90:
                 coords = " ".join([coords.split(' ')[0], str(float((coords.split(' ')[1])) - 1)])
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+
+                if full_adress != '':
+                    a = get_coords_for_city(str(text))
+                    get_map(coords, zoom, map_file, a)
+                    get_map(coords, zoom, map_file1, a)
+                    get_map(coords, zoom, map_file2, a)
+                else:
+                    get_map(coords, zoom, map_file)
+                    get_map(coords, zoom, map_file1)
+                    get_map(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -218,11 +225,18 @@ while running:
             if -90 < float((coords.split(' ')[1])) + 1 < 90:
                 coords = " ".join([coords.split(' ')[0], str(float((coords.split(' ')[1])) + 1)])
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+
+                if full_adress != '':
+                    a = get_coords_for_city(str(text))
+                    get_map(coords, zoom, map_file, a)
+                    get_map(coords, zoom, map_file1, a)
+                    get_map(coords, zoom, map_file2, a)
+                else:
+                    get_map(coords, zoom, map_file)
+                    get_map(coords, zoom, map_file1)
+                    get_map(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -230,11 +244,18 @@ while running:
             if -180 < float((coords.split(' ')[0])) - 1 < 180:
                 coords = " ".join([str(float((coords.split(' ')[0])) - 1), coords.split(' ')[1]])
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+
+                if full_adress != '':
+                    a = get_coords_for_city(str(text))
+                    get_map(coords, zoom, map_file, a)
+                    get_map(coords, zoom, map_file1, a)
+                    get_map(coords, zoom, map_file2, a)
+                else:
+                    get_map(coords, zoom, map_file)
+                    get_map(coords, zoom, map_file1)
+                    get_map(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -242,11 +263,18 @@ while running:
             if -180 < float((coords.split(' ')[0])) + 1 < 180:
                 coords = " ".join([str(float((coords.split(' ')[0])) + 1), coords.split(' ')[1]])
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
                 os.remove(map_file1)
-                get_sat(coords, zoom, map_file1)
                 os.remove(map_file2)
-                get_gb(coords, zoom, map_file2)
+
+                if full_adress != '':
+                    a = get_coords_for_city(str(text))
+                    get_map(coords, zoom, map_file, a)
+                    get_map(coords, zoom, map_file1, a)
+                    get_map(coords, zoom, map_file2, a)
+                else:
+                    get_map(coords, zoom, map_file)
+                    get_map(coords, zoom, map_file1)
+                    get_map(coords, zoom, map_file2)
 
                 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
 
@@ -258,7 +286,12 @@ while running:
                 zoom = f'{float(zoom[0])} {float(zoom[1])}'
             if i == 0:
                 os.remove(map_file)
-                get_map(coords, zoom, map_file)
+
+                if full_adress != '':
+                   get_map(coords, zoom, map_file)
+                else:
+                    get_map(coords, zoom, map_file, coords)
+
             elif i == 1:
                 os.remove(map_file1)
                 get_sat(coords, zoom, map_file1)

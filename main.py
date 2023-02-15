@@ -7,12 +7,15 @@ x, y = map(float, input("Введите координаты через проб
 while not (-90 < x < 90 and -180 < y < 180):
     print("Неверные данные ")
     x, y = map(float, input("Введите координаты через пробел: ").split())
+
 coords = f"{y} {x}"
 print()
+
 scale = list(map(float, input("Введите параметры масштаба через пробел: ").split()))
 while not (0 < scale[0] < 70 and 0 < scale[1] < 70):
     print("Неверные данные ")
     scale = list(map(float, input("Введите параметры масштаба через пробел: ").split()))
+
 scale = f"{scale[0]} {scale[1]}"
 map_file = "map.png"
 map_file1 = "map1.png"
@@ -129,6 +132,7 @@ get_index()
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
 running = True
 i = 0
 zoom = scale
@@ -147,10 +151,12 @@ prev_adress = ""
 q = coords
 show_index = False
 innput_box =  pygame.Rect(0, 0, 35, height // 3)
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if innput_box.collidepoint(event.pos):
                 active = True
@@ -172,11 +178,14 @@ while running:
                 show_index = not show_index
             else:
                 show_index = False
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
             i += 1
             i = (i + 1) % 3 - 1
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEDOWN:
             zoom = zoom.split()
+
             if float(zoom[0]) >= 0 and float(zoom[0]) <= 70 and float(zoom[1]) >= 0 and float(zoom[1]) <= 70:
                 zoom = f'{float(zoom[0]) + 1} {float(zoom[1]) + 1}'
             else:
@@ -191,6 +200,56 @@ while running:
                 os.remove(map_file2)
                 get_gb(coords, zoom, map_file2)
             slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            if -90 < float((coords.split(' ')[1])) - 1 < 90:
+                coords = " ".join([coords.split(' ')[0], str(float((coords.split(' ')[1])) - 1)])
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+                slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            if -90 < float((coords.split(' ')[1])) + 1 < 90:
+                coords = " ".join([coords.split(' ')[0], str(float((coords.split(' ')[1])) + 1)])
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+                slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            if -180 < float((coords.split(' ')[0])) - 1 < 180:
+                coords = " ".join([str(float((coords.split(' ')[0])) - 1), coords.split(' ')[1]])
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+                slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            if -180 < float((coords.split(' ')[0])) + 1 < 180:
+                coords = " ".join([str(float((coords.split(' ')[0])) + 1), coords.split(' ')[1]])
+                os.remove(map_file)
+                get_map(coords, zoom, map_file)
+                os.remove(map_file1)
+                get_sat(coords, zoom, map_file1)
+                os.remove(map_file2)
+                get_gb(coords, zoom, map_file2)
+
+                slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEUP:
             zoom = zoom.split()
             if float(zoom[0]) > 0 and float(zoom[1]) > 0:
@@ -207,6 +266,7 @@ while running:
                 os.remove(map_file2)
                 get_gb(coords, zoom, map_file2)
             slides = [pygame.image.load(map_file), pygame.image.load(map_file1), pygame.image.load(map_file2)]
+
         if event.type == pygame.KEYDOWN:
             if active:
                 if event.key == pygame.K_RETURN:
@@ -227,6 +287,7 @@ while running:
                     text = text[:-1]
                 else:
                     text += event.unicode
+
     txt_surface = font.render(text, True, color)
     slide = slides[i]
     screen.blit(slide, (0, 0))
@@ -237,10 +298,12 @@ while running:
     screen.blit(font.render("Показывать индекс", True, (0)), (btn_index.x + 5, btn_index.y + 5))
     screen.blit(font.render("Объект для поиска: ", True, (120, 120, 120)), (input_box.x + 5, input_box.y + 5))
     lines = full_adress.splitlines()
+
     if show_index:
         lines += ["Почтовый индекс:"] + [index]
     for m, l in enumerate(lines):
         screen.blit(font.render(l, True, (120, 120, 120)), (btn_clear.x + 5, btn_clear.y + 40 + 20 * m))
     screen.blit(txt_surface, (input_box.x + 5, input_box.y + 20))
     pygame.display.flip()
+
 pygame.quit()
